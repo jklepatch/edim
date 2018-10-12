@@ -1,11 +1,13 @@
 pragma solidity ^0.4.24;
 
 contract HelloWorld {
-    string public message;
-    string private _message;
+    string message;
     
-    constructor(string myMessage) public {
-        message = myMessage;
-        _message = myMessage;
+    constructor(string _message) {
+        message = _message;
+    }
+
+    function getMessage() returns(string) {
+      return message;
     }
 }
