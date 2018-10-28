@@ -4,13 +4,13 @@ import Message from '../components/Message';
 
 class Header extends Component {
   render() {
-    const { message, onDismissMessage } = this.props;
+    const { message, onDismissMessage, wallet } = this.props;
 
     return (
       <header id="header" className="card">
         <div className="row">
           <div className="col-sm-12">
-            <h1>MultiSig Wallet Dapp</h1>
+            <h1>MultiSig Wallet Dapp - <span className="contract-address">Contract address: <span className="address">{wallet.options.address}</span></span></h1>
           </div>
         </div>
         <div className="row">
@@ -28,7 +28,8 @@ class Header extends Component {
 
 Header.propTypes = {
   message: PropTypes.object,
-  onDismissMessage: PropTypes.func.isRequired
+  onDismissMessage: PropTypes.func.isRequired,
+  wallet: PropTypes.func.isRequired
 };
 
 export default Header;

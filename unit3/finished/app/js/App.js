@@ -4,10 +4,8 @@ import Header from './layout/Header';
 import Main from './layout/Main';
 import Footer from './layout/Footer';
 import Loading from './components/Loading';
-//import { web3, wallet } from './ethereum';
 import config from './config';
 import Api from './api';
-
 
 class App extends Component {
   constructor(props) {
@@ -71,6 +69,7 @@ class App extends Component {
 
   render() {
     const { isReady, accounts, message, transfers } = this.state;
+    const { wallet } = this.props;
     console.log(this.state);
     if(!isReady) {
       return <Loading />
@@ -81,6 +80,7 @@ class App extends Component {
         <Header
           message={message}
           onDismissMessage={this.onDismissMessage}
+          wallet={wallet}
         />
         <Main
           transfers={transfers}
@@ -92,5 +92,10 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  web3: PropTypes.object.isRequired,
+  wallet: PropTypes.object.isRequired
+};
 
 export default App;

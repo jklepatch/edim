@@ -31,7 +31,7 @@ class NewTransfer extends Component {
   render() {
     return (
       <div id="new-transfer" className="card">
-        <h2>New Transfer</h2>
+        <h2 className="card-title">New Transfer</h2>
         <form onSubmit={this.onSubmit}>
           <div class="form-group row">
             <label for="amount" class="col-sm-4 col-form-label">Amount</label>
