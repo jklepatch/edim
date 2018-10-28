@@ -7,7 +7,7 @@ contract Wallet {
 
   //address admin;
   uint8 quorum; //= 2; 
-  //uint lastTransactionId = 0;
+  uint lastId = 0;
   struct Transfer {
     uint id;
     uint amount;
@@ -30,6 +30,7 @@ contract Wallet {
   //event ApproverRemoved(uint date, address approver); 
   //event FundReceived(uint date, address sender, uint amount);
   //event TransactionSent(uint date, uint id, address to, uint amount);
+  event TransferCreated(uint lastId, uint amount, address to, bool sent);
 
   /**
    * Public functions
@@ -43,21 +44,36 @@ contract Wallet {
     }
   }
 
+  function createTransfer(uint amount, address to) onlyApprovers public {
+    lastId++;
+    transfers[lastId] = Transfer({
+      id: lastId,
+      amount: amount,
+      to: to,
+      sent: false
+    });
+    transferList.push(lastId);
+    emit TransferCreated(lastId, amount, to, false);
+  }
+
   function getTransfers() view public 
     returns(
       uint[], 
       uint[],
-      address[]
+      address[],
+      bool[]
     ) {
     uint[] memory ids = new uint[](transferList.length);
     uint[] memory amounts = new uint[](transferList.length);
     address[] memory tos = new address[](transferList.length);
+    bool[] memory sents = new bool[](transferList.length);
     for(uint i = 0; i < transferList.length; i++) {
       ids[i] = transfers[transferList[i]].id;
       amounts[i] = transfers[transferList[i]].amount;
       tos[i] = transfers[transferList[i]].to;
+      sents[i] = transfers[transferList[i]].sent;
     }
-    return (ids, amounts, tos);
+    return (ids, amounts, tos, sents);
   }
 
   function getApprovers() view public returns(address[]) {

@@ -5,18 +5,18 @@ import Transfers from '../components/Transfers';
 
 class Main extends Component {
   render() {
-    const { transfers, onSendTransaction, onCreateTransaction } = this.props;
+    const { transfers, sendTransfer, createTransfer } = this.props;
 
     return (
       <main className="container-fluid">
         <div className="row">
           <div className="col-sm-4 first-col">
-            <NewTransfer onSubmit={onCreateTransaction} />
+            <NewTransfer createTransfer={createTransfer} />
           </div>
           <div className="col-sm-8">
             <Transfers
               transfers={transfers}
-              onSendTransfer={onSendTransaction}
+              sendTransfer={sendTransfer}
             />
           </div>
         </div>
@@ -27,7 +27,8 @@ class Main extends Component {
 
 Main.propTypes = {
   transactions: PropTypes.array.isRequired,
-  onSendTransaction: PropTypes.func.isRequired
+  createTransfer: PropTypes.func.isRequired,
+  sendTransfer: PropTypes.func.isRequired
 };
 
 export default Main;

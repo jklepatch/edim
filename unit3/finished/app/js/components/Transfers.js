@@ -9,25 +9,25 @@ class Transfers extends Component {
   }
 
   renderTransfers() {
-    const { transfers, onSendTransfer } = this.props;
+    const { transfers, sendTransfer } = this.props;
 
     return (
       <table>
         <thead>
-          <th>
-            <td>Id</td>
-            <td>From</td>
-            <td>Amount</td>
-            <td>Sent</td>
-            <td>Action</td>
-            <td>Ethereum Tx</td>
-          </th>
+          <tr>
+            <th>Id</th>
+            <th>Amount</th>
+            <th>To</th>
+            <th>Sent</th>
+            <th>Action</th>
+            {/*<th>Ethereum Tx</th>*/}
+          </tr>
         </thead>
         <tbody>
         {transfers.map((transfer) => 
           <Transfer 
             transfer={transfer}
-            onSendTransfer={onSendTransfer}
+            sendTransfer={sendTransfer}
           />)}
         </tbody>
       </table>
@@ -48,7 +48,7 @@ class Transfers extends Component {
 
 Transfers.propTypes = {
   transfers: PropTypes.array.isRequired,
-  onSendTransfer: PropTypes.func.isRequired,
+  sendTransfer: PropTypes.func.isRequired
 };
 
 export default Transfers;

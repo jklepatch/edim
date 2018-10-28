@@ -13,24 +13,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.api = new Api(props.web3, props.wallet);
-
     this.state = {
       isReady: false,
       accounts: [],
       message: undefined,
       transfers: []
     };
+    this.createTransfer = this.createTransfer.bind(this);
   }
 
   async componentDidMount() {
     const { web3, wallet } = this.props;
     const accounts = await this.api.getAccounts();
+    this.api.accounts = accounts;
     const transfers = await this.api.getTransfers();
     this.setState({
       isReady: true,
       accounts,
       transfers
     });
+  }
+
+  async createTransfer(params) {
+    const receipt = await this.api.createTransfer(params);
+    console.log(receipt);
+  }
+
+  async sendTransfer() {
   }
    
   //onSendTransaction = (e, id) => {
@@ -60,16 +69,6 @@ class App extends Component {
   //  });
   //}
 
-  //componentDidMount = () => {
-  //  const transactions = await api.getTransactions();
-  //  const accounts = await api.getAccounts();
-
-  //  this.setState({
-  //    accounts,
-  //    transactions
-  //  });
-  //}
-
   render() {
     const { isReady, accounts, message, transfers } = this.state;
     console.log(this.state);
@@ -85,7 +84,8 @@ class App extends Component {
         />
         <Main
           transfers={transfers}
-          onSendTransaction={this.onSendTransaction}
+          createTransfer={this.createTransfer}
+          sendTransfer={this.sendTransfer}
         />
         <Footer />
       </Fragment>
