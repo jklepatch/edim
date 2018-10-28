@@ -7,7 +7,6 @@ const getEthereumUrl = (env) => {
 
 const config = {
   ethereumUrl: getEthereumUrl(ENV),
-  TIMEOUT: 10000 //timeout to reload transactions after changing state
 };
 
 export default config;

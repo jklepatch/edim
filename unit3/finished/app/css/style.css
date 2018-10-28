@@ -1,6 +1,4 @@
 /**
- * CSS of ToDo App
- *
  * Blue: #29b6f6
  * Orange: #ff9800
  */
@@ -10,10 +8,12 @@
  */
 body {
   background-color: #fcfcfc;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 footer {
-  background-color: #ff9800;
+  background-color: rgb(20, 20, 20);
   color: white;
   padding: 25px 15px;
 }
@@ -23,76 +23,49 @@ footer a {
  font-weight: bold;
 }
 
-/**
- * Generic Styles 
- */
-.orange {
-  color: #ff9800;
+footer p {
+  margin: 0;
 }
 
-/* Inspiration: Google material design */
-.card {
-  background-color: white;
-  border-radius: 2px;
-  padding: 0 15px 15px 15px;
-  margin-bottom: 25px;
-  webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
-                     0 1px 5px 0 rgba(0,0,0,0.12), 
-                     0 3px 1px -2px rgba(0,0,0,0.2);
-
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
-              0 1px 5px 0 rgba(0,0,0,0.12), 
-              0 3px 1px -2px rgba(0,0,0,0.2);
-}
-
-.task-done {
-  text-decoration: line-through;
-  background-color: #eee;
+@media (min-width: 576px) {
+  .first-col {
+    padding-right: 0;
+  }
 }
 
 .btn-primary {
-  background-color: #ff9800;;
-  border-color: #d17906
+  color: #fff;
+  background-color: #731DD8;
+  border-color: #731DD8;
 }
 
-.btn-primary:hover {
-  background-color: #d17906;
-  border-color: #d17906;
+#app {
+  background-color: #000000;
 }
 
-.btn-primary:active {
-  background-color: #d17906;
-  border-color: #d17906;
+.card {
+  background-color: rgb(20, 20, 20);
+  border-radius: 5px;
+  padding: 1em;
+  margin-bottom: 1em;
 }
 
-.btn-primary:focus {
-  background-color: #d17906 !important;
-  border-color: #d17906;
+.card h2 {
+  font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border-bottom: 10px solid #731DD8;
+  margin-bottom: 1em;
 }
 
-/**
- * Components 
- */
-
-/* By default the message wrapper is hidden
- * It is displayed only when there is a message
- * to be shown
- */
-#message-wrapper {
-  display: none;
+#header h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 1rem;
 }
 
-#page-header {
-  margin-top: 0;
-  margin-bottom: 25px;
-  background: #29b6f6;
-  color: white;
-  border-bottom: none;
-  webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
-                     0 1px 5px 0 rgba(0,0,0,0.12), 
-                     0 3px 1px -2px rgba(0,0,0,0.2);
-
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
-              0 1px 5px 0 rgba(0,0,0,0.12), 
-              0 3px 1px -2px rgba(0,0,0,0.2);
+#new-transfer form {
+  margin-bottom: 0;
 }

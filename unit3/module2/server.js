@@ -21,5 +21,5 @@ app.get('*', (req, res) => {
 
 //Start the server
 app.listen(PORT, () =>  {
-  console.log(`MultiSig Wallet Dapp running on port ${PORT}...`);
+  console.log(`MultiSig Ethereum Wallet running on port ${PORT}...`);
 });

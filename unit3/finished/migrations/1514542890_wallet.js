@@ -1,5 +1,5 @@
-var Wallet = artifacts.require("./Wallet.sol");
+const Wallet = artifacts.require("./Wallet.sol");
 
-module.exports = async function(deployer) {
-  await Wallet.new(2);
+module.exports = function(deployer, _network, accounts) {
+  deployer.deploy(Wallet, 2, [accounts[0], accounts[1], accounts[2]]);
 };
