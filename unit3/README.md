@@ -1,10 +1,8 @@
-# Multi-sig ERC20 Wallet
+# MultiSig Wallet Dapp
 
 This is the code for Unit 3 of Ethereum Dapp In Motions (Manning)
 
-This wallet allows to send ERC20 tokens. Pre-approved users (approvers) can vote
-to approve a specific transaction. When a transaction hasA quorum of users must first approve a 
-transaction
+This wallet allows to send Ether when it receive enough signatures. Pre-approved users (approvers) can vote to approve a specific transfer. When a transfer has received enough approvals (i.e reaches the quorum of approvals), the transfer is sent.
 
 ## Features
 
