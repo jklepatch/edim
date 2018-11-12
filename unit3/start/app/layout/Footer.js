@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer>
-      <p class="text-center">
+      <p className="text-center">
         Copyright 2018  - Manning / Julien Klepatch Ethereum Dapps In Motion
       </p>
     </footer>
