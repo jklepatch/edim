@@ -6,4 +6,8 @@ contract Wallet {
   constructor(address[] _approvers) public {
     approvers = _approvers;
   }
+
+  function createTransfer() view public returns(string) {
+    return "Transfer created!";
+  }
 }
