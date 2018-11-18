@@ -11,6 +11,7 @@ class App extends Component {
     const result = wallet.methods.createTransfer().call();
     console.log(result);
   }
+
   render() {
     return (
       <div id="app">
