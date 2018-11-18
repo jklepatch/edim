@@ -14,7 +14,7 @@ class App extends Component {
     const accounts = await web3.eth.getAccounts();
     this.setState({accounts});
     console.log(this.state.accounts);
-    const result = wallet.methods.createTransfer().call();
+    const result = await wallet.methods.createTransfer().call();
     console.log(result);
   }
 
