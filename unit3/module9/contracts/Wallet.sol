@@ -11,7 +11,7 @@ contract Wallet {
   }
   mapping(uint => Transfer) transfers;
   uint[] transferList;
-  uint currentId;
+  uint nextId;
   uint quorum;
   mapping(address => mapping(uint => bool)) approvals;
 
@@ -21,18 +21,18 @@ contract Wallet {
   }
 
   function createTransfer(uint amount, address to) public {
-    transfers[currentId] = Transfer(
-      currentId,
+    transfers[nextId] = Transfer(
+      nextId,
       amount,
       to,
       0,
       false
     );
-    transferList.push(currentId);
+    transferList.push(nextId);
     currentId++;
   }
 
-  function sendTransfer(uint id) payable public {
+  function sendTransfer(uint id) public {
     require(transfers[id].to != 0);
     require(transfers[id].sent == false);
     if(approvals[msg.sender][id] == false) {

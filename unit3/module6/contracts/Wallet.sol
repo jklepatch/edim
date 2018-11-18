@@ -6,24 +6,25 @@ contract Wallet {
     uint id;
     uint amount;
     address to;
+    uint approvals;
     bool sent;
   }
   mapping(uint => Transfer) transfers;
-  uint[] transferList;
-  uint currentId;
+  uint nextId;
 
   constructor(address[] _approvers) public {
     approvers = _approvers;
   }
 
   function createTransfer(uint amount, address to) {
-    transfers[currentId] = Transfer(
+    transfers[nextId] = Transfer(
       currentId,
       amount,
       to,
+      0,
       false
     );
-    transferList.push(currentId);
-    currentId++;
+    transferList.push(nextId);
+    nextId++;
   }
 }
