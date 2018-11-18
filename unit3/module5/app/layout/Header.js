@@ -19,7 +19,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  wallet: PropTypes.object.isRequired
+  wallet: PropTypes.object
 };
 
 export default Header;
