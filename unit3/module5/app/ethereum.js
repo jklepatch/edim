@@ -10,4 +10,4 @@ const network = networks[networks.length - 1];
 const { address } = artifact.networks[network];
 const wallet = new web3.eth.Contract(artifact.abi, address);
 
-export default { web3, wallet };
+export { web3, wallet };

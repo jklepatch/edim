@@ -5,9 +5,15 @@ import Footer from './layout/Footer';
 import { web3, wallet } from './ethereum';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {accounts: []};
+  }
+
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
-    console.log(accounts);
+    this.setState({accounts});
+    console.log(this.state.accounts);
     const result = wallet.methods.createTransfer().call();
     console.log(result);
   }
