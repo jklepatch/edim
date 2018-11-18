@@ -6,7 +6,6 @@ contract Wallet {
     uint id;
     uint amount;
     address to;
-    //  address[] approvals;
     bool sent;
   }
   mapping(uint => Transfer) transfers;
@@ -22,29 +21,9 @@ contract Wallet {
       currentId,
       amount,
       to,
-      true
+      false
     );
     transferList.push(currentId);
     currentId++;
-  }
-
-  function getTransfers() view public 
-    returns(
-      uint[], 
-      uint[],
-      address[],
-      bool[]
-    ) {
-    uint[] memory ids = new uint[](transferList.length);
-    uint[] memory amounts = new uint[](transferList.length);
-    address[] memory tos = new address[](transferList.length);
-    bool[] memory sents = new bool[](transferList.length);
-    for(uint i = 0; i < transferList.length; i++) {
-      ids[i] = transfers[transferList[i]].id;
-      amounts[i] = transfers[transferList[i]].amount;
-      tos[i] = transfers[transferList[i]].to;
-      sents[i] = transfers[transferList[i]].sent;
-    }
-    return (ids, amounts, tos, sents);
   }
 }
