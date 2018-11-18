@@ -16,7 +16,7 @@ contract Wallet {
     approvers = _approvers;
   }
 
-  function createTransfer(uint amount, address to) {
+  function createTransfer(uint amount, address to) public {
     transfers[nextId] = Transfer(
       currentId,
       amount,
@@ -24,7 +24,6 @@ contract Wallet {
       0,
       false
     );
-    transferList.push(nextId);
     nextId++;
   }
 }
