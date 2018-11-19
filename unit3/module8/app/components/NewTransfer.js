@@ -24,7 +24,7 @@ class NewTransfer extends Component {
               <div className="input-group mb-3">
                 <input id="amount" type="text" className="form-control" />
                 <div className="input-group-append">
-                  <span className="input-group-text">ETH</span>
+                  <span className="input-group-text">WEI</span>
                 </div>
               </div>
             </div>
