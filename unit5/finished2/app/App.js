@@ -10,7 +10,7 @@ class App extends Component {
     this.state = {
       accounts: [], 
       tokens: [],
-      activeAccount: {index: 0, address: ''},
+      activeAccount: '',
       activeToken: {symbol: '', address: ''},
     };
   }
@@ -18,10 +18,10 @@ class App extends Component {
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
     const rawTokens = await dex.methods.getTokens().call();
-    //const t = await dex.methods.gett().call();
     const tokens = [];
     for(let i = 0; i < rawTokens[0].length; i++) {
       tokens.push({
+        id: i,
         symbol: web3.utils.toAscii(rawTokens[0][i]),
         address: rawTokens[1][i]
       });
@@ -29,19 +29,17 @@ class App extends Component {
     this.setState({
       accounts,
       tokens,
-      activeAccount: {index: 0, address: accounts[0]},
+      activeAccount: accounts[0],
       activeToken: tokens[0] 
     });
   }
 
-  selectAccount(i) {
-    this.setState({
-      activeAccount: {index: i, address: this.state.accounts[i]}
-    });
+  selectAccount(account) {
+    this.setState({activeAccount: account});
   }
 
-  selectToken(i) {
-    this.setState({activeToken: this.state.tokens[i]});
+  selectToken(token) {
+    this.setState({activeToken: token}); 
   }
 
   async createTransfer(amount, to) {
@@ -65,11 +63,9 @@ class App extends Component {
           activeToken={activeToken}
           selectToken={this.selectToken.bind(this)}
         />
-        {/*<Main 
-          createTransfer={this.createTransfer} 
-          sendTransfer={this.sendTransfer}
-          transfers={transfers}
-        />*/}
+        <Main 
+          activeToken={activeToken}
+        />
         <Footer />
       </div>
     );

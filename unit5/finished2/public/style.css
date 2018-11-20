@@ -27,16 +27,50 @@ footer p {
   margin: 0;
 }
 
+/*
+ * Utilities
+ */
 @media (min-width: 576px) {
   .first-col {
     padding-right: 0;
   }
 }
 
+.flex {
+  display: flex;
+}
+
+/*
+ * Bootstrap override
+ */
 .btn-primary {
   color: #fff;
   background-color: #731DD8;
   border-color: #731DD8;
+}
+
+.form-control {
+  background-color: rgb(40,40,40);
+  color: white;
+  border: none;
+}
+
+.form-control:focus {
+  background-color: rgb(40,40,40);
+  color: white;
+  border: none;
+}
+
+.form-control:disabled {
+  background-color: rgb(20,20,20);
+  color: white;
+  border: none;
+}
+
+.input-group-append .input-group-text {
+  background-color: black;
+  border: 1px solid rgb(40,40,40);
+  color: white;
 }
 
 /**
@@ -67,6 +101,39 @@ footer p {
   font-family: 'Courier';
 }
 
+.dropdown .dropdown-toggle {
+  background-color: black;
+  border: 1px solid rgb(40,40,40);
+}
+
+.dropdown .dropdown-toggle:focus{
+  box-shadow: none;
+}
+
+.dropdown .dropdown-menu {
+  background-color: black;
+  border: 1px solid rgb(40,40,40);
+  color: white;
+}
+
+.dropdown .dropdown-menu .dropdown-item {
+  color: white;
+}
+
+.dropdown .dropdown-menu .dropdown-item.active {
+  background-color: #731DD8; 
+  color: white;
+}
+
+.dropdown .dropdown-menu .dropdown-item:hover{
+  background-color: #441282;
+  color: white;
+}
+
+.dropdown .visible {
+  display: block;
+}
+
 /**
  * Modules
  */
@@ -81,8 +148,22 @@ footer p {
   text-align: center;
   margin-bottom: 0;
   font-size: 1rem;
+  line-height: 38px;
 }
 
-#new-transfer form {
-  margin-bottom: 0;
+#transfer #direction {
+  width: 100%;
+}
+
+#transfer #direction button {
+  width: 50%;
+  background-color: #441282;
+  border: 2px solid #441282;
+}
+
+#transfer #direction button.active {
+  background-color: #731DD8;
+}
+#transfer #direction button:focus {
+  box-shadow: none;
 }

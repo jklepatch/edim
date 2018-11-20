@@ -1,36 +1,31 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react'; 
-import { DropdownButton, MenuItem } from 'react-bootstrap';
-
+import Dropdown from '../components/Dropdown';
 
 class Header extends Component {
   constructor(props) {
     super(props);
   }
 
-  renderAccount(index, address) {
-    return `(${index}) ${address && address.slice(0, 8)}...`;
+  formatAccount(account, i) {
+    return `(${i}) ${account && account.slice(0, 8)}...`;
   }
 
   renderAccounts() {
     const { accounts, activeAccount, selectAccount } = this.props;
 
     return (
-      <DropdownButton
-        title={this.renderAccount(activeAccount.index, activeAccount.address)}
-        id='account-dropdown'
+      <Dropdown 
+        items={accounts.map((account, i) => ({
+          label: this.formatAccount(account, i),
+          value: account
+        }))} 
+        activeItem={{
+          label: this.formatAccount(activeAccount, accounts.indexOf(activeAccount)), 
+          value: activeAccount
+        }}
         onSelect={selectAccount}
-      >
-        {accounts.map((account, i) => (
-          <MenuItem 
-            key={i} 
-            eventKey={i}
-            active={activeAccount.address == account.address}
-          >
-            {this.renderAccount(i, account)}
-          </MenuItem>
-        ))}
-      </DropdownButton>
+      />
     );
   }
 
@@ -38,30 +33,28 @@ class Header extends Component {
     const { tokens, activeToken, selectToken } = this.props;
 
     return (
-      <DropdownButton
-        title={activeToken.symbol}
-        id='token-dropdown'
+      <Dropdown 
+        className="ml-3"
+        items={tokens.map((token, i) => ({
+          label: token.symbol,
+          value: token
+        }))} 
+        activeItem={{
+          label: activeToken.symbol,
+          value: activeToken
+        }}
         onSelect={selectToken}
-      >
-        {tokens.map((token, i) => (
-          <MenuItem 
-            key={i} 
-            eventKey={i}
-            active={activeToken.symbol == token.symbol}
-          >
-            {token.symbol}
-          </MenuItem>
-        ))}
-      </DropdownButton>
+      />
     );
   }
 
   render() {
     const { dex } = this.props;
+
     return (
       <header id="header" className="card">
         <div className="row">
-          <div className="col-sm-3">
+          <div className="col-sm-3 flex">
             {this.renderAccounts()}
             {this.renderTokens()}
           </div>
@@ -79,7 +72,7 @@ class Header extends Component {
 Header.propTypes = {
   dex: PropTypes.object,
   accounts: PropTypes.array,
-  activeAccount: PropTypes.object,
+  activeAccount: PropTypes.string,
   selectAccount: PropTypes.func.isRequired,
   tokens: PropTypes.array,
   activeToken: PropTypes.object,

@@ -1,22 +1,25 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react'; 
-import NewTransfer from '../components/NewTransfer';
-import Transfers from '../components/Transfers';
+import Wallet from '../components/Wallet';
+import Orders from '../components/Orders';
+import Market from '../components/Market';
 
 class Main extends Component {
+
   render() {
-    const { transfers, createTransfer, sendTransfer } = this.props;
+    const { activeToken } = this.props;
+
     return (
       <main className="container-fluid">
         <div className="row">
           <div className="col-sm-4 first-col">
-            <NewTransfer createTransfer={createTransfer} />
+            <Wallet activeToken={activeToken} />
           </div>
-          <div className="col-sm-8">
-            <Transfers
-              transfers={transfers}
-              sendTransfer={sendTransfer}
-            />
+          <div className="col-sm-4">
+            <Orders />
+          </div>
+          <div className="col-sm-4">
+            <Market />
           </div>
         </div>
       </main>
@@ -25,9 +28,7 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  transfers: PropTypes.array,
-  createTransfer: PropTypes.func.isRequired,
-  sendTransfer: PropTypes.func.isRequired
+  activeToken: PropTypes.object
 };
 
 export default Main;
