@@ -29,7 +29,7 @@ contract Wallet {
       false
     );
     transferList.push(nextId);
-    currentId++;
+    nextId++;
   }
 
   function sendTransfer(uint id) public {
