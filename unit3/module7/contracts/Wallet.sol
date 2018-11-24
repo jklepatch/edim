@@ -19,7 +19,7 @@ contract Wallet {
 
   function createTransfer(uint amount, address to) public {
     transfers[nextId] = Transfer(
-      currentId,
+      nextId,
       amount,
       to,
       0,

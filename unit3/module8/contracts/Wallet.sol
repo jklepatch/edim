@@ -19,14 +19,14 @@ contract Wallet {
 
   function createTransfer(uint amount, address to) public {
     transfers[nextId] = Transfer(
-      currentId,
+      nextId,
       amount,
       to,
       0,
       false
     );
     transferList.push(nextId);
-    currentId++;
+    nextId++;
   }
 
   function sendTransfer(uint id) public {
