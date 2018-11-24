@@ -58,15 +58,15 @@ contract Wallet {
     uint[] memory ids = new uint[](transferList.length);
     uint[] memory amounts = new uint[](transferList.length);
     address[] memory tos = new address[](transferList.length);
-    uint[] memory aps = new uint[](transferList.length);
+    uint[] memory approvals = new uint[](transferList.length);
     bool[] memory sents = new bool[](transferList.length);
     for(uint i = 0; i < transferList.length; i++) {
       ids[i] = transfers[transferList[i]].id;
       amounts[i] = transfers[transferList[i]].amount;
       tos[i] = transfers[transferList[i]].to;
-      aps[i] = transfers[transferList[i]].approvals;
+      approvals[i] = transfers[transferList[i]].approvals;
       sents[i] = transfers[transferList[i]].sent;
     }
-    return (ids, amounts, tos, aps, sents);
+    return (ids, amounts, tos, approvals, sents);
   }
 }
