@@ -18,6 +18,7 @@ class Transfers extends Component {
             <th>Id</th>
             <th>Amount</th>
             <th>To</th>
+            <th>Approvals</th>
             <th>Sent</th>
           </tr>
         </thead>

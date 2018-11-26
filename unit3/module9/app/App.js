@@ -16,7 +16,7 @@ class App extends Component {
     const accounts = await web3.eth.getAccounts();
     const rawTransfers = await wallet.methods.getTransfers().call();
     const transfers = [];
-    for(let i = 0; i < rawTransfers[0].length; i++) {
+    for(const i of rawTransfers[0].keys()) {
       transfers.push({
         id: rawTransfers[0][i],
         amount: rawTransfers[1][i],
