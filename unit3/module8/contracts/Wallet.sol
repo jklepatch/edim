@@ -32,10 +32,10 @@ contract Wallet {
   function sendTransfer(uint id) public {
     require(transfers[id].to != 0);
     require(transfers[id].sent == false);
+    transfers[id].sent = true;
     address to = transfers[id].to;
     uint amount = transfers[id].amount;
     to.transfer(amount);
-    transfers[id].sent = true;
   }
 
   function getTransfers() view public 
