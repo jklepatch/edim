@@ -39,7 +39,6 @@ class App extends Component {
   }
 
   async sendTransfer(id) {
-    console.log('sendTransfer');
     const receipt = await wallet.methods
       .sendTransfer(id)
       .send({from: this.state.accounts[0], gas: 200000});
