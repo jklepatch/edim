@@ -38,6 +38,7 @@ class Transfer extends Component {
         <td>{transfer.id}</td>
         <td>{transfer.amount}</td>
         <td>{transfer.to}</td>
+        <td>{transfer.approvals}</td>
         <td>{transfer.sent ? 'Yes' : 'No'}</td>
         <td>{this.renderAction()}</td>
       </Fragment>
