@@ -32,9 +32,16 @@ contract Dex {
     }
   }
 
-  function deposit(bytes32 symbol, uint amount) {
+  function deposit(uint amount, bytes32 symbol) public {
     IERC20(tokens[symbol].at).transferFrom(msg.sender, address(this), amount);
     balances[msg.sender][symbol] += amount;
+  }
+
+  function balanceOf(address _address, bytes32 symbol) 
+    view 
+    public 
+    returns(uint) {
+      return balances[_address][symbol];
   }
     
 
@@ -77,8 +84,5 @@ contract Dex {
       addresses[i] = tokens[tokenList[i]].at;
     }
     return (symbols, addresses);
-  }
-  function gett() view public returns(uint) {
-    return tokenList.length;
   }
 }
