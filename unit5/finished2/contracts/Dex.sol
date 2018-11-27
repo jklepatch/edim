@@ -9,7 +9,7 @@ contract Dex {
   }
   mapping(bytes32 => Token) tokens; 
   bytes32[] tokenList;
-  mapping(address => mapping(bytes32 =>  uint)) balances;
+  mapping(address => mapping(bytes32 => uint)) balances;
 
   //address[] public approvers;
   //struct Transfer {
