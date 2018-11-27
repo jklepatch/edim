@@ -23,5 +23,13 @@ module.exports = function(deployer, _network, accounts) {
       EOS.at(EOS.address).transfer(accounts[4], 1000, {from: accounts[1]}),
       OMG.at(OMG.address).transfer(accounts[4], 1000, {from: accounts[2]}),
     ]);
+  })
+  .then(() => {
+    return Promise.all([
+      EOS.at(EOS.address).approve(Dex.address, 1000, {from: accounts[3]}),
+      OMG.at(OMG.address).approve(Dex.address, 1000, {from: accounts[3]}),
+      EOS.at(EOS.address).approve(Dex.address, 1000, {from: accounts[4]}),
+      OMG.at(OMG.address).approve(Dex.address, 1000, {from: accounts[4]}),
+    ]);
   });
 };
