@@ -86,3 +86,10 @@ footer p {
 #new-transfer form {
   margin-bottom: 0;
 }
+
+#transfers td:nth-of-type(3) {
+  text-overflow: ellipsis;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+}
