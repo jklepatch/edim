@@ -10,7 +10,8 @@ class Wallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      direction: DIRECTION.DEPOSIT
+      direction: DIRECTION.DEPOSIT,
+      amount: 0
     }
   }
 
@@ -22,12 +23,21 @@ class Wallet extends Component {
     this.setState({direction});
   }
 
-  onSubmit() {
-    console.log('send token');
+  onAmountChange(amount) {
+    this.setState({amount});
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    const { amount, direction } = this.state;
+    if(direction == DIRECTION.DEPOSIT) {
+      this.props.deposit(amount);
+      console.log('deposit token');
+    }
   }
 
   render() {
-    const { activeToken, selection, user } = this.props;
+    const { selection, user } = this.props;
     const { direction } = this.state;
 
     return (
@@ -57,7 +67,7 @@ class Wallet extends Component {
             </div>
           </div>
         <h3>Transfer {selection.token.symbol}</h3>
-        <form id="transfer" onSubmit={this.onSubmit} onChange={this.onChange}>
+        <form id="transfer" onSubmit={(e) => this.onSubmit(e)} onChange={this.onChange}>
           <div className="form-group row">
             <label htmlFor="direction" className="col-sm-4 col-form-label">Direction</label>
             <div className="col-sm-8">
@@ -79,7 +89,12 @@ class Wallet extends Component {
             <label htmlFor="amount" className="col-sm-4 col-form-label">Amount</label>
             <div className="col-sm-8">
               <div className="input-group mb-3">
-                <input id="amount" type="text" className="form-control" />
+                <input 
+                  id="amount" 
+                  type="text" 
+                  className="form-control" 
+                  onChange={(e) => this.onAmountChange(e.target.value)}
+                />
                 <div className="input-group-append">
                   <span className="input-group-text">{selection.token.symbol}</span>
                 </div>

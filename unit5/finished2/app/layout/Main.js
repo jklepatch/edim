@@ -7,16 +7,16 @@ import Market from '../components/Market';
 class Main extends Component {
 
   render() {
-    const { user, selection, activeToken } = this.props;
+    const { user, selection, deposit } =this.props;
 
     return (
       <main className="container-fluid">
         <div className="row">
           <div className="col-sm-4 first-col">
             <Wallet 
-              activeToken={activeToken} 
               selection={selection}
               user={user}
+              deposit={deposit}
             />
           </div>
           <div className="col-sm-4">

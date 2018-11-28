@@ -82,10 +82,11 @@ class App extends Component {
     });
   }
 
-  async createTransfer(amount, to) {
-    const receipt = await wallet.methods
-      .createTransfer(amount, to)
-      .send({from: this.state.accounts[0], gas: 200000});
+  async deposit(amount) {
+    const { selection } = this.state;
+    const receipt = await contracts.dex.methods
+      .deposit(amount, web3.utils.fromAscii(selection.token.symbol))
+      .send({from: selection.account, gas: 200000});
     console.log(receipt);
   }
 
@@ -105,6 +106,7 @@ class App extends Component {
         <Main 
           selection={selection}
           user={user}
+          deposit={this.deposit.bind(this)}
         />
         <Footer />
       </div>
