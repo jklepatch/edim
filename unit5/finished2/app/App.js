@@ -83,15 +83,21 @@ class App extends Component {
   }
 
   async deposit(amount) {
-    const { selection } = this.state;
+    const { selection, user } = this.state;
     const receipt = await contracts.dex.methods
       .deposit(amount, web3.utils.fromAscii(selection.token.symbol))
       .send({from: selection.account, gas: 200000});
-    console.log(receipt);
+    const balances = await this.refreshBalances(
+      selection.account, 
+      selection.token
+    );
+    this.setState({
+      user: { ...user, balances},
+    });
   }
 
   async withdraw(amount) {
-    const { selection } = this.state;
+    const { selection, user } = this.state;
     const receipt = await contracts.dex.methods
       .withdraw(
         amount, 
@@ -99,7 +105,13 @@ class App extends Component {
         selection.account
       )
       .send({from: selection.account, gas: 200000});
-    console.log(receipt);
+    const balances = await this.refreshBalances(
+      selection.account, 
+      selection.token
+    );
+    this.setState({
+      user: { ...user, balances},
+    });
   }
 
   render() {
