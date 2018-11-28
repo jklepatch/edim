@@ -90,6 +90,18 @@ class App extends Component {
     console.log(receipt);
   }
 
+  async withdraw(amount) {
+    const { selection } = this.state;
+    const receipt = await contracts.dex.methods
+      .withdraw(
+        amount, 
+        web3.utils.fromAscii(selection.token.symbol), 
+        selection.account
+      )
+      .send({from: selection.account, gas: 200000});
+    console.log(receipt);
+  }
+
   render() {
     const { tokens, user, selection } = this.state;
 
@@ -107,6 +119,7 @@ class App extends Component {
           selection={selection}
           user={user}
           deposit={this.deposit.bind(this)}
+          withdraw={this.withdraw.bind(this)}
         />
         <Footer />
       </div>

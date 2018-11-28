@@ -37,6 +37,12 @@ contract Dex {
     balances[msg.sender][symbol] += amount;
   }
 
+  function withdraw(uint amount, bytes32 symbol, address to) public {
+    require(balances[msg.sender][symbol] >= amount);
+    balances[msg.sender][symbol] -= amount;
+    IERC20(tokens[symbol].at).transfer(to, amount);
+  }
+
   function balanceOf(address _address, bytes32 symbol) 
     view 
     public 

@@ -15,10 +15,6 @@ class Wallet extends Component {
     }
   }
 
-  onChange(e) {
-    console.log(e);
-  }
-
   onDirectionChange(direction) {
     this.setState({direction});
   }
@@ -32,7 +28,8 @@ class Wallet extends Component {
     const { amount, direction } = this.state;
     if(direction == DIRECTION.DEPOSIT) {
       this.props.deposit(amount);
-      console.log('deposit token');
+    } else {
+      this.props.withdraw(amount);
     }
   }
 
@@ -67,7 +64,7 @@ class Wallet extends Component {
             </div>
           </div>
         <h3>Transfer {selection.token.symbol}</h3>
-        <form id="transfer" onSubmit={(e) => this.onSubmit(e)} onChange={this.onChange}>
+        <form id="transfer" onSubmit={(e) => this.onSubmit(e)}>
           <div className="form-group row">
             <label htmlFor="direction" className="col-sm-4 col-form-label">Direction</label>
             <div className="col-sm-8">
