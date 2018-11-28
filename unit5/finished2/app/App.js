@@ -23,10 +23,19 @@ class App extends Component {
     };
   }
 
+  async refreshBalances(account, token) {
+    const tokenDex = await contracts.dex.methods
+      .balanceOf(account, web3.utils.fromAscii(token.symbol))
+      .call();
+    const tokenWallet = await contracts[token.symbol].methods
+      .balanceOf(account)
+      .call();
+    return {tokenDex, tokenWallet};
+  }
+
   async componentDidMount() {
-    const { dex } = contracts;
     const accounts = await web3.eth.getAccounts();
-    const rawTokens = await dex.methods.getTokens().call();
+    const rawTokens = await contracts.dex.methods.getTokens().call();
     const tokens = [];
     for(let i = 0; i < rawTokens[0].length; i++) {
       tokens.push({
@@ -37,22 +46,12 @@ class App extends Component {
     }
     const activeAccount = accounts[3];
     const activeToken = tokens[0];
-    const tokenDex = await dex.methods
-      .balanceOf(activeAccount, web3.utils.fromAscii(activeToken))
-      .call();
-
-    const tokenWallet = await contracts[activeToken.symbol].methods
-      .balanceOf(activeAccount)
-      .call();
-
+    const balances = await this.refreshBalances(activeAccount, activeToken);
     this.setState({
       tokens,
       user: {
         accounts,
-        balances: {
-          tokenDex,
-          tokenWallet
-        },
+        balances
       },
       selection: {
         account: activeAccount,
@@ -61,15 +60,25 @@ class App extends Component {
     });
   }
 
-  selectAccount(account) {
+  async selectAccount(account) {
+    const balances = await this.refreshBalances(
+      account, 
+      this.state.selection.token
+    );
     this.setState({
-      selection: { ...this.state.selection, account}
+      selection: { ...this.state.selection, account},
+      user: {...this.state.user, balances}
     });
   }
 
-  selectToken(token) {
+  async selectToken(token) {
+    const balances = await this.refreshBalances(
+      this.state.selection.account, 
+      token
+    );
     this.setState({
-      selection: { ...this.state.selection, token}
+      selection: { ...this.state.selection, token},
+      user: {...this.state.user, balances}
     });
   }
 
