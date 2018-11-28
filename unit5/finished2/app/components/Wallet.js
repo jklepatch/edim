@@ -27,26 +27,36 @@ class Wallet extends Component {
   }
 
   render() {
-    const { activeToken } = this.props;
+    const { activeToken, selection, user } = this.props;
     const { direction } = this.state;
 
     return (
       <div id="wallet" className="card">
         <h2 className="card-title">Wallet</h2>
-        <h3>Token balance for {activeToken.symbol}</h3>
+        <h3>Token balance for {selection.token.symbol}</h3>
           <div className="form-group row">
             <label htmlFor="wallet" className="col-sm-4 col-form-label">Wallet</label>
             <div className="col-sm-8">
-              <input className="form-control" id="wallet" disabled value="00000" />
+              <input 
+                className="form-control" 
+                id="wallet" 
+                disabled 
+                value={user.balances.tokenWallet}
+              />
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="contract" className="col-sm-4 col-form-label">Contract</label>
+            <label htmlFor="contract" className="col-sm-4 col-form-label">Dex</label>
             <div className="col-sm-8">
-              <input className="form-control" id="contract" disabled value="00000" />
+              <input 
+                className="form-control" 
+                id="wallet" 
+                disabled 
+                value={user.balances.tokenDex}
+              />
             </div>
           </div>
-        <h3>Transfer {activeToken.symbol}</h3>
+        <h3>Transfer {selection.token.symbol}</h3>
         <form id="transfer" onSubmit={this.onSubmit} onChange={this.onChange}>
           <div className="form-group row">
             <label htmlFor="direction" className="col-sm-4 col-form-label">Direction</label>
@@ -71,7 +81,7 @@ class Wallet extends Component {
               <div className="input-group mb-3">
                 <input id="amount" type="text" className="form-control" />
                 <div className="input-group-append">
-                  <span className="input-group-text">{activeToken.symbol}</span>
+                  <span className="input-group-text">{selection.token.symbol}</span>
                 </div>
               </div>
             </div>

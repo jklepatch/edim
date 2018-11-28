@@ -1,13 +1,23 @@
 import Web3 from 'web3';
-import artifact from '../build/contracts/Dex.json';
+import DexArtifact from '../build/contracts/Dex.json';
+import EOSArtifact from '../build/contracts/EOS.json';
+import OMGArtifact from '../build/contracts/OMG.json';
 
 //Configure web3 to work with Ethereum blockchain
 const web3 = new Web3('http://localhost:9545');
 
 //Configure web3 to work with our smart contract
-const networks = Object.keys(artifact.networks);
-const network = networks[networks.length - 1];
-const { address } = artifact.networks[network];
-const dex = new web3.eth.Contract(artifact.abi, address);
+const getContract = (artifact) => {
+  const networks = Object.keys(artifact.networks);
+  const network = networks[networks.length - 1];
+  const { address } = artifact.networks[network];
+  return new web3.eth.Contract(artifact.abi, address);
+}
 
-export { web3, dex };
+const contracts = {
+  dex: getContract(DexArtifact),
+  'EOS': getContract(EOSArtifact),
+  OMG: getContract(OMGArtifact)
+}
+
+export { web3, contracts };

@@ -7,13 +7,17 @@ import Market from '../components/Market';
 class Main extends Component {
 
   render() {
-    const { activeToken } = this.props;
+    const { user, selection, activeToken } = this.props;
 
     return (
       <main className="container-fluid">
         <div className="row">
           <div className="col-sm-4 first-col">
-            <Wallet activeToken={activeToken} />
+            <Wallet 
+              activeToken={activeToken} 
+              selection={selection}
+              user={user}
+            />
           </div>
           <div className="col-sm-4">
             <Orders />
@@ -28,7 +32,8 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  activeToken: PropTypes.object
+  activeToken: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default Main;
