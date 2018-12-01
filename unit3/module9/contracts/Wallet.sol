@@ -20,7 +20,7 @@ contract Wallet {
     quorum = _quorum;
   }
 
-  function createTransfer(uint amount, address to) public {
+  function createTransfer(uint amount, address to) onlyApprovers() public {
     transfers[nextId] = Transfer(
       nextId,
       amount,
@@ -32,7 +32,7 @@ contract Wallet {
     nextId++;
   }
 
-  function sendTransfer(uint id) public {
+  function sendTransfer(uint id) onlyApprovers() public {
     require(transfers[id].to != 0);
     require(transfers[id].sent == false);
     if(approvals[msg.sender][id] == false) {
@@ -68,5 +68,18 @@ contract Wallet {
       sents[i] = transfers[transferList[i]].sent;
     }
     return (ids, amounts, tos, approvals, sents);
+  }
+
+  modifier onlyApprovers() {
+    bool allowed = false;
+    for(uint i; i < approvers.length; i++) {
+      if(approvers[i] == msg.sender) {
+        allowed = true;
+      }
+    }
+    if(allowed == false) {
+      revert();
+    }
+    _;
   }
 }
