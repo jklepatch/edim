@@ -18,8 +18,7 @@
   "dependencies": {
     "openzeppelin-solidity": "^2.0.0",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "webpack-dev-server": "^3.1.10"
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
