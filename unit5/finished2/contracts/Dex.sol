@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 
@@ -25,7 +25,7 @@ contract Dex {
   //uint quorum;
   //mapping(address => mapping(uint => bool)) approvals;
 
-  constructor(bytes32[] symbols, address[] ats) public {
+  constructor(bytes32[] memory symbols, address[] memory ats) public {
     for(uint i = 0; i < symbols.length; i++) {
       tokens[symbols[i]] = Token(symbols[i], ats[i]);
       tokenList.push(symbols[i]);
@@ -80,8 +80,8 @@ contract Dex {
 
   function getTokens() view public 
     returns(
-      bytes32[], 
-      address[]
+      bytes32[] memory, 
+      address[] memory
     ) {
     bytes32[] memory symbols = new bytes32[](tokenList.length);
     address[] memory addresses = new address[](tokenList.length);

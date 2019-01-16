@@ -16,7 +16,7 @@
     ]
   },
   "dependencies": {
-    "openzeppelin-solidity": "^2.0.0",
+    "openzeppelin-solidity": "^2.1.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
