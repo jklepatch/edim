@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import DexArtifact from '../build/contracts/Dex.json';
+import WETHArtifact from '../build/contracts/WETH.json';
 import EOSArtifact from '../build/contracts/EOS.json';
 import OMGArtifact from '../build/contracts/OMG.json';
 
@@ -16,7 +17,8 @@ const getContract = (artifact) => {
 
 const contracts = {
   dex: getContract(DexArtifact),
-  'EOS': getContract(EOSArtifact),
+  WETH: getContract(WETHArtifact),
+  EOS: getContract(EOSArtifact),
   OMG: getContract(OMGArtifact)
 }
 

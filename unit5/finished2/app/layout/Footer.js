@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer>
       <p className="text-center">
-        Copyright 2018  - Manning / Julien Klepatch Ethereum Dapps In Motion
+        Copyright 2019  - Manning / Julien Klepatch Ethereum Dapps In Motion
       </p>
     </footer>
   );

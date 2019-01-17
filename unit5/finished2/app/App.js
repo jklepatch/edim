@@ -44,7 +44,7 @@ class App extends Component {
         address: rawTokens[1][i]
       });
     }
-    const activeAccount = accounts[3];
+    const activeAccount = accounts[4];
     const activeToken = tokens[0];
     const balances = await this.refreshBalances(activeAccount, activeToken);
     this.setState({
