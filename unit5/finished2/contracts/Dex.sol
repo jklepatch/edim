@@ -30,8 +30,6 @@ contract Dex {
     for(uint i = 0; i < symbols.length; i++) {
       tokens[symbols[i]] = Token(symbols[i], ats[i]);
       tokenList.push(symbols[i]);
-      //books[symbols[i]][uint(Side.BUY)] = new Order[](0);
-      //books[symbols[i]][uint(Side.SELL)] = new Order[](0);
     }
   }
 
@@ -75,15 +73,19 @@ contract Dex {
       price,
       now
     ));
-    //uint i = orders.length - 1;
-    //while(i > orders.length) {
-    //  if(price < orders[i].price) {
-    //    break;
-    //  }
-    //  Order memory order = orders[i];
-    //  orders[i]= orders[i+1];
-    //  orders[i+1] = order;
-    //}
+    uint i = orders.length - 1;
+    while(i > 0) {
+      if(side == Side.BUY && orders[i].price < orders[i - 1].price) {
+        break;
+      }
+      if(side == Side.SELL && orders[i].price > orders[i - 1].price) {
+        break;
+      }
+      Order memory order = orders[i - 1];
+      orders[i - 1] = orders[i];
+      orders[i] = order;
+      i--;
+    }
   }
 
   function addMarketOrder() external {

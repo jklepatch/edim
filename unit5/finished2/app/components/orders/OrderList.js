@@ -8,7 +8,7 @@ class OrderList extends Component {
         <table className={`table table-striped mb-0 order-list ${className}`}>
           <thead>
             <tr className="table-title order-list-title">
-              <th colspan='3'>{side}</th>
+              <th colSpan='3'>{side}</th>
             </tr>
             <tr>
               <th>amount</th>
