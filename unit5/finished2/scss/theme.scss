@@ -1,0 +1,26 @@
+.table {
+  border: 1px solid $black;
+  font-size: $fontSmall;
+  .table-title {
+    padding: 1em 0.5em;
+    text-transform: uppercase;
+  }
+  thead {
+    tr {
+      background-color: $black !important;
+    }
+    th {
+      border: none;
+      padding: 0.5em
+    }
+  }
+  td {
+    border-top: none;
+    padding: 0.25em 0.5em;
+  }
+  &.table-striped {
+    tr:nth-of-type(odd) {
+      background-color: $lightBlack;
+    }
+  }
+}

@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 class OrderList extends Component {
-  renderList(orders, side) {
+  renderList(orders, side, className) {
     return (
       <Fragment>
-        <h3>{side}</h3>
-        <table className="table">
+        <table className={`table table-striped mb-0 order-list ${className}`}>
           <thead>
+            <tr className="table-title order-list-title">
+              <th colspan='3'>{side}</th>
+            </tr>
             <tr>
               <th>amount</th>
               <th>price</th>
@@ -34,10 +36,10 @@ class OrderList extends Component {
         <h2 className="card-title">Orders</h2>
         <div className="row">
           <div className="col-sm-6">
-            {this.renderList(orders.buy, 'Buy')}
+            {this.renderList(orders.buy, 'Buy', 'order-list-buy')}
           </div>
           <div className="col-sm-6">
-            {this.renderList(orders.sell, 'Sell')}
+            {this.renderList(orders.sell, 'Sell', 'order-list-sell')}
           </div>
         </div>
       </div>
