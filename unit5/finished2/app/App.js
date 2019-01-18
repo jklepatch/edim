@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import Wallet from './components/Wallet';
-import Orders from './components/orders';
+//import Orders from './components/orders';
+import NewOrder from './components/orders/NewOrder';
+import OrderList from './components/orders/OrderList';
 import Market from './components/Market';
 import { web3, contracts } from './ethereum';
 
@@ -177,6 +179,10 @@ class App extends Component {
         <main className="container-fluid">
           <div className="row">
             <div className="col-sm-4 first-col">
+              <NewOrder 
+                addMarketOrder={this.addMarketOrder.bind(this)}
+                addLimitOrder={this.addLimitOrder.bind(this)}
+              />
               <Wallet 
                 selection={selection}
                 user={user}
@@ -184,15 +190,12 @@ class App extends Component {
                 withdraw={this.withdraw.bind(this)}
               />
             </div>
-            <div className="col-sm-4">
-              <Orders 
+            <div className="col-sm-8">
+              <OrderList 
                 addMarketOrder={this.addMarketOrder.bind(this)}
                 addLimitOrder={this.addLimitOrder.bind(this)}
                 orders={orders}
               />
-            </div>
-            <div className="col-sm-4">
-              <Market />
             </div>
           </div>
         </main>
