@@ -20,17 +20,8 @@ class App extends Component {
         account: '',
         token: {}
       },
+      orders: []
     };
-  }
-
-  async refreshBalances(account, token) {
-    const tokenDex = await contracts.dex.methods
-      .balanceOf(account, web3.utils.fromAscii(token.symbol))
-      .call();
-    const tokenWallet = await contracts[token.symbol].methods
-      .balanceOf(account)
-      .call();
-    return {tokenDex, tokenWallet};
   }
 
   async componentDidMount() {
@@ -47,6 +38,7 @@ class App extends Component {
     const activeAccount = accounts[4];
     const activeToken = tokens[0];
     const balances = await this.refreshBalances(activeAccount, activeToken);
+    const orders = await this.refreshOrders(activeToken);
     this.setState({
       tokens,
       user: {
@@ -57,7 +49,28 @@ class App extends Component {
         account: activeAccount,
         token: activeToken
       },
+      orders: {
+        buy: orders[0],
+        sell: orders[1]
+      }
     });
+  }
+
+  async refreshBalances(account, token) {
+    const tokenDex = await contracts.dex.methods
+      .balanceOf(account, web3.utils.fromAscii(token.symbol))
+      .call();
+    const tokenWallet = await contracts[token.symbol].methods
+      .balanceOf(account)
+      .call();
+    return {tokenDex, tokenWallet};
+  }
+
+  async refreshOrders(token) {
+    const orders = await contracts.dex.methods
+      .getOrders(web3.utils.fromAscii(token.symbol))
+      .call();
+    return {orders};
   }
 
   async selectAccount(account) {
@@ -114,6 +127,38 @@ class App extends Component {
     });
   }
 
+  async addMarketOrder(amount, price, side) {
+    const { selection } = this.state;
+    const receipt = await contracts.dex.methods
+      .addMarketOrder(
+        web3.utils.fromAscii(selection.token.symbol),
+        amount,
+        price,
+        side
+      )
+      .send({from: selection.account, gas: 200000});
+    const orders = await this.refreshOrders(selection.token);
+    this.setState({
+      order: { orders }
+    });
+  }
+
+  async addLimitOrder(amount, price, side) {
+    const { selection } = this.state;
+    const receipt = await contracts.dex.methods
+      .addLimitOrder(
+        web3.utils.fromAscii(selection.token.symbol),
+        amount,
+        price,
+        side
+      )
+      .send({from: selection.account, gas: 1000000});
+    const orders = await this.refreshOrders(selection.token);
+    this.setState({
+      order: { orders }
+    });
+  }
+
   render() {
     const { tokens, user, selection } = this.state;
 
@@ -132,6 +177,8 @@ class App extends Component {
           user={user}
           deposit={this.deposit.bind(this)}
           withdraw={this.withdraw.bind(this)}
+          addMarketOrder={this.addMarketOrder.bind(this)}
+          addLimitOrder={this.addLimitOrder.bind(this)}
         />
         <Footer />
       </div>

@@ -7,7 +7,7 @@ import Market from '../components/Market';
 class Main extends Component {
 
   render() {
-    const { user, selection, deposit, withdraw } =this.props;
+    const { user, selection, deposit, withdraw, addMarketOrder, addLimitOrder } = this.props;
 
     return (
       <main className="container-fluid">
@@ -21,7 +21,10 @@ class Main extends Component {
             />
           </div>
           <div className="col-sm-4">
-            <Orders />
+            <Orders 
+              addMarketOrder={addMarketOrder}
+              addLimitOrder={addLimitOrder}
+            />
           </div>
           <div className="col-sm-4">
             <Market />

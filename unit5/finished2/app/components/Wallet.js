@@ -26,7 +26,7 @@ class Wallet extends Component {
   onSubmit(e) {
     e.preventDefault();
     const { amount, direction } = this.state;
-    if(direction == DIRECTION.DEPOSIT) {
+    if(direction === DIRECTION.DEPOSIT) {
       this.props.deposit(amount);
     } else {
       this.props.withdraw(amount);

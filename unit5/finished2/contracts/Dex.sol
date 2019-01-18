@@ -1,4 +1,5 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 
@@ -11,24 +12,26 @@ contract Dex {
   bytes32[] tokenList;
   mapping(address => mapping(bytes32 => uint)) balances;
 
-  //address[] public approvers;
-  //struct Transfer {
-  //  uint id;
-  //  uint amount;
-  //  address to;
-  //  uint approvals;
-  //  bool sent;
-  //}
-  //mapping(uint => Transfer) transfers;
-  //uint[] transferList;
-  //uint nextId;
-  //uint quorum;
-  //mapping(address => mapping(uint => bool)) approvals;
+  struct Order {
+    uint id;
+    address user;
+    uint amount;
+    uint price;
+    uint date;
+  }
+  enum Side {
+    BUY,
+    SELL
+  }
+  mapping(bytes32 => mapping(uint => Order[])) books;
+  uint nextOrderId;
 
   constructor(bytes32[] memory symbols, address[] memory ats) public {
     for(uint i = 0; i < symbols.length; i++) {
       tokens[symbols[i]] = Token(symbols[i], ats[i]);
       tokenList.push(symbols[i]);
+      //books[symbols[i]][uint(Side.BUY)] = new Order[](0);
+      //books[symbols[i]][uint(Side.SELL)] = new Order[](0);
     }
   }
 
@@ -48,6 +51,42 @@ contract Dex {
     public 
     returns(uint) {
       return balances[_address][symbol];
+  }
+
+  function getOrders(bytes32 token) 
+    view 
+    external 
+    returns(Order[] memory, Order[] memory) {
+    return (books[token][uint(Side.BUY)], books[token][uint(Side.SELL)]);
+  }
+
+  function addLimitOrder(
+    bytes32 token, 
+    uint amount, 
+    uint price, 
+    Side side) 
+    external {
+    require(tokens[token].at != address(0), 'This token does not exist');
+    Order[] storage orders = books[token][uint(side)];
+    orders.push(Order(
+      nextOrderId++, 
+      msg.sender,
+      amount, 
+      price,
+      now
+    ));
+    //uint i = orders.length - 1;
+    //while(i > orders.length) {
+    //  if(price < orders[i].price) {
+    //    break;
+    //  }
+    //  Order memory order = orders[i];
+    //  orders[i]= orders[i+1];
+    //  orders[i+1] = order;
+    //}
+  }
+
+  function addMarketOrder() external {
   }
     
 
