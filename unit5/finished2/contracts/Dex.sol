@@ -65,6 +65,11 @@ contract Dex {
     Side side) 
     external {
     require(tokens[token].at != address(0), 'This token does not exist');
+    if(side == Side.SELL) {
+      require(balances[msg.sender][token] >= amount, 'Token balance is too low');  
+    } else {
+      require(balances[msg.sender][bytes32('WETH')] >= amount * price, 'WETH balance is too low');
+    }
     Order[] storage orders = books[token][uint(side)];
     orders.push(Order(
       nextOrderId++, 
@@ -90,34 +95,6 @@ contract Dex {
 
   function addMarketOrder() external {
   }
-    
-
-  //function createTransfer(uint amount, address to) public {
-  //  transfers[nextId] = Transfer(
-  //    nextId,
-  //    amount,
-  //    to,
-  //    0,
-  //    false
-  //  );
-  //  transferList.push(nextId);
-  //  currentId++;
-  //}
-
-  //function sendTransfer(uint id) public {
-  //  require(transfers[id].to != 0);
-  //  require(transfers[id].sent == false);
-  //  if(approvals[msg.sender][id] == false) {
-  //    approvals[msg.sender][id] = true;
-  //    transfers[id].approvals++;
-  //  }
-  //  if(transfers[id].approvals >= quorum) {
-  //    address to = transfers[id].to;
-  //    uint amount = transfers[id].amount;
-  //    to.transfer(amount);
-  //    transfers[id].sent = true;
-  //  }
-  //}
 
   function getTokens() view public 
     returns(
