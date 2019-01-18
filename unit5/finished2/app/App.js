@@ -20,7 +20,10 @@ class App extends Component {
         account: '',
         token: {}
       },
-      orders: []
+      orders: {
+        buy: [],
+        sell: []
+      }
     };
   }
 
@@ -49,10 +52,7 @@ class App extends Component {
         account: activeAccount,
         token: activeToken
       },
-      orders: {
-        buy: orders[0],
-        sell: orders[1]
-      }
+      orders
     });
   }
 
@@ -70,7 +70,7 @@ class App extends Component {
     const orders = await contracts.dex.methods
       .getOrders(web3.utils.fromAscii(token.symbol))
       .call();
-    return {orders};
+    return {buy: orders[0], sell: orders[1]};
   }
 
   async selectAccount(account) {
@@ -160,7 +160,7 @@ class App extends Component {
   }
 
   render() {
-    const { tokens, user, selection } = this.state;
+    const { tokens, user, selection, orders } = this.state;
 
     return (
       <div id="app">
@@ -179,6 +179,7 @@ class App extends Component {
           withdraw={this.withdraw.bind(this)}
           addMarketOrder={this.addMarketOrder.bind(this)}
           addLimitOrder={this.addLimitOrder.bind(this)}
+          orders={orders}
         />
         <Footer />
       </div>

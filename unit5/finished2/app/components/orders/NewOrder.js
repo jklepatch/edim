@@ -52,7 +52,7 @@ class Orders extends Component {
     const { type, side } = this.state;
     return (
       <div id="orders" className="card">
-        <h2 className="card-title">Orders</h2>
+        <h2 className="card-title">New Order</h2>
         <form onSubmit={(e) => this.onSubmit(e)}>
           <div className="form-group row">
             <label htmlFor="type" className="col-sm-4 col-form-label">Type</label>

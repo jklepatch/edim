@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react'; 
 import Wallet from '../components/Wallet';
-import Orders from '../components/Orders';
+import Orders from '../components/orders';
 import Market from '../components/Market';
 
 class Main extends Component {
 
   render() {
-    const { user, selection, deposit, withdraw, addMarketOrder, addLimitOrder } = this.props;
+    const { user, selection, deposit, withdraw, addMarketOrder, addLimitOrder, orders } = this.props;
 
     return (
       <main className="container-fluid">
@@ -24,6 +24,7 @@ class Main extends Component {
             <Orders 
               addMarketOrder={addMarketOrder}
               addLimitOrder={addLimitOrder}
+              orders={orders}
             />
           </div>
           <div className="col-sm-4">
