@@ -111,17 +111,17 @@ contract Dex {
     }
     Order[] storage orders = books[token][uint(side == Side.BUY ? Side.SELL : Side.BUY)];
     uint i = 0;
-    uint filled = 0;
-    while(i < orders.length && filled < amount) {
-      uint matched = (amount > (orders[i].amount - orders[i].filled)) ? (orders[i].amount - orders[i].filled) : orders[i].amount; 
-      filled += matched;
+    uint remaining = amount;
+    while(i < orders.length && remaining > 0) {
+      uint matched = (remaining > (orders[i].amount - orders[i].filled)) ? (orders[i].amount - orders[i].filled) : remaining; 
+      remaining -= matched;
       orders[i].filled += matched; 
       trades[token].push(Trade(
         nextTradeId++,
         orders[i].user, 
         msg.sender,
-        orders[i].price,
         matched,
+        orders[i].price,
         now 
       ));
       i++;

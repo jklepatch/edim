@@ -56,7 +56,7 @@ class Header extends Component {
             {this.renderTokens()}
           </div>
           <div className="col-sm-9">
-            <h1>
+            <h1 className="header-title">
               DimDex - <span className="contract-address">Contract address: <span className="address">{contracts.dex.options.address}</span></span>
             </h1>
           </div>

@@ -24,3 +24,53 @@
     }
   }
 }
+
+.btn-group {
+  width: 100%;
+  display: flex;
+  .btn {
+    flex: 1;
+    border: 2px solid $purple !important;
+    background-color: $purple;
+    &.active {
+      background-color: $lightPurple !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+}
+
+.btn-primary {
+  color: $white;
+  background-color: $lightPurple;
+  border-color: $lightPurple;
+  &:hover {
+    background-color: $purple;
+    border-color: $lightPurple;
+  }
+}
+
+.form-control {
+  background-color: rgb(40,40,40);
+  color: white;
+  border: none;
+  &:focus {
+    background-color: rgb(40,40,40);
+    color: white;
+    border: none;
+  }
+  &:disabled {
+    background-color: rgb(20,20,20);
+    color: white;
+    border: none;
+  }
+}
+
+.input-group-append {
+  .input-group-text {
+    background-color: $black;
+    border: 1px solid rgb(40,40,40);
+    color: white;
+  }
+}
