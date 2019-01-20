@@ -46,9 +46,9 @@ class App extends Component {
     }
     const activeAccount = accounts[4];
     const activeToken = tokens[0];
-    const balances = await this.refreshBalances(activeAccount, activeToken);
-    const orders = await this.refreshOrders(activeToken);
-    const trades = await this.refreshTrades(activeToken);
+    const balances = await this.getBalances(activeAccount, activeToken);
+    const orders = await this.getOrders(activeToken);
+    const trades = await this.getTrades(activeToken);
     this.setState({
       tokens,
       user: {
@@ -64,7 +64,7 @@ class App extends Component {
     });
   }
 
-  async refreshBalances(account, token) {
+  async getBalances(account, token) {
     const tokenDex = await contracts.dex.methods
       .balanceOf(account, web3.utils.fromAscii(token.symbol))
       .call();
@@ -74,14 +74,14 @@ class App extends Component {
     return {tokenDex, tokenWallet};
   }
 
-  async refreshOrders(token) {
+  async getOrders(token) {
     const orders = await contracts.dex.methods
       .getOrders(web3.utils.fromAscii(token.symbol))
       .call();
     return {buy: orders[0], sell: orders[1]};
   }
 
-  async refreshTrades(token) {
+  async getTrades(token) {
     const trades= await contracts.dex.methods
       .getTrades(web3.utils.fromAscii(token.symbol))
       .call();
@@ -89,7 +89,7 @@ class App extends Component {
   }
 
   async selectAccount(account) {
-    const balances = await this.refreshBalances(
+    const balances = await this.getBalances(
       account, 
       this.state.selection.token
     );
@@ -100,13 +100,17 @@ class App extends Component {
   }
 
   async selectToken(token) {
-    const balances = await this.refreshBalances(
+    const balances = await this.getBalances(
       this.state.selection.account, 
       token
     );
+    const orders = await this.getOrders(token);
+    const trades = await this.getTrades(token);
     this.setState({
       selection: { ...this.state.selection, token},
-      user: {...this.state.user, balances}
+      user: {...this.state.user, balances},
+      orders,
+      trades
     });
   }
 
@@ -115,7 +119,7 @@ class App extends Component {
     const receipt = await contracts.dex.methods
       .deposit(amount, web3.utils.fromAscii(selection.token.symbol))
       .send({from: selection.account, gas: 200000});
-    const balances = await this.refreshBalances(
+    const balances = await this.getBalances(
       selection.account, 
       selection.token
     );
@@ -133,7 +137,7 @@ class App extends Component {
         selection.account
       )
       .send({from: selection.account, gas: 200000});
-    const balances = await this.refreshBalances(
+    const balances = await this.getBalances(
       selection.account, 
       selection.token
     );
@@ -152,7 +156,7 @@ class App extends Component {
         side
       )
       .send({from: selection.account, gas: 1000000});
-    const orders = await this.refreshOrders(selection.token);
+    const orders = await this.getOrders(selection.token);
     this.setState({
       orders
     });
@@ -168,7 +172,7 @@ class App extends Component {
         side
       )
       .send({from: selection.account, gas: 1000000});
-    const orders = await this.refreshOrders(selection.token);
+    const orders = await this.getOrders(selection.token);
     this.setState({
       orders
     });
