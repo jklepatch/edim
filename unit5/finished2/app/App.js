@@ -5,7 +5,8 @@ import Wallet from './components/Wallet';
 //import Orders from './components/orders';
 import NewOrder from './components/orders/NewOrder';
 import OrderList from './components/orders/OrderList';
-import Market from './components/Market';
+import TradeList from './components/Trade';
+//import Market from './components/Market';
 import { web3, contracts } from './ethereum';
 
 class App extends Component {
@@ -27,7 +28,8 @@ class App extends Component {
       orders: {
         buy: [],
         sell: []
-      }
+      },
+      trades: []
     };
   }
 
@@ -46,6 +48,7 @@ class App extends Component {
     const activeToken = tokens[0];
     const balances = await this.refreshBalances(activeAccount, activeToken);
     const orders = await this.refreshOrders(activeToken);
+    const trades = await this.refreshTrades(activeToken);
     this.setState({
       tokens,
       user: {
@@ -56,7 +59,8 @@ class App extends Component {
         account: activeAccount,
         token: activeToken
       },
-      orders
+      orders,
+      trades
     });
   }
 
@@ -75,6 +79,13 @@ class App extends Component {
       .getOrders(web3.utils.fromAscii(token.symbol))
       .call();
     return {buy: orders[0], sell: orders[1]};
+  }
+
+  async refreshTrades(token) {
+    const trades= await contracts.dex.methods
+      .getTrades(web3.utils.fromAscii(token.symbol))
+      .call();
+    return trades; 
   }
 
   async selectAccount(account) {
@@ -164,7 +175,7 @@ class App extends Component {
   }
 
   render() {
-    const { tokens, user, selection, orders } = this.state;
+    const { tokens, user, selection, orders, trades } = this.state;
 
     return (
       <div id="app">
@@ -192,9 +203,10 @@ class App extends Component {
             </div>
             <div className="col-sm-8">
               <OrderList 
-                addMarketOrder={this.addMarketOrder.bind(this)}
-                addLimitOrder={this.addLimitOrder.bind(this)}
                 orders={orders}
+              />
+              <TradeList 
+                trades={trades}
               />
             </div>
           </div>

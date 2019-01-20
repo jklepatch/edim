@@ -63,13 +63,6 @@ contract Dex {
       return balances[_address][symbol];
   }
 
-  function getOrders(bytes32 token) 
-    view 
-    external 
-    returns(Order[] memory, Order[] memory) {
-    return (books[token][uint(Side.BUY)], books[token][uint(Side.SELL)]);
-  }
-
   function addLimitOrder(
     bytes32 token, 
     uint amount, 
@@ -141,7 +134,23 @@ contract Dex {
     }
   }
 
-  function getTokens() view public 
+  function getOrders(bytes32 token) 
+    view 
+    external 
+    returns(Order[] memory, Order[] memory) {
+    return (books[token][uint(Side.BUY)], books[token][uint(Side.SELL)]);
+  }
+
+  function getTrades(bytes32 token) 
+    view 
+    external 
+    returns(Trade[] memory) {
+    return (trades[token]);
+  }
+
+  function getTokens() 
+    view 
+    external 
     returns(
       bytes32[] memory, 
       address[] memory
