@@ -140,10 +140,10 @@ class App extends Component {
         price,
         side
       )
-      .send({from: selection.account, gas: 200000});
+      .send({from: selection.account, gas: 1000000});
     const orders = await this.refreshOrders(selection.token);
     this.setState({
-      order: { orders }
+      orders
     });
   }
 
@@ -159,7 +159,7 @@ class App extends Component {
       .send({from: selection.account, gas: 1000000});
     const orders = await this.refreshOrders(selection.token);
     this.setState({
-      order: { orders }
+      orders
     });
   }
 

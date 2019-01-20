@@ -15,6 +15,7 @@ contract Dex {
   struct Order {
     uint id;
     address user;
+    uint filled;
     uint amount;
     uint price;
     uint date;
@@ -25,6 +26,17 @@ contract Dex {
   }
   mapping(bytes32 => mapping(uint => Order[])) books;
   uint nextOrderId;
+
+  struct Trade {
+    uint id;
+    address user1;
+    address user2;
+    uint amount;
+    uint price;
+    uint date;
+  }
+  mapping(bytes32 => Trade[]) trades;
+  uint nextTradeId;
 
   constructor(bytes32[] memory symbols, address[] memory ats) public {
     for(uint i = 0; i < symbols.length; i++) {
@@ -74,6 +86,7 @@ contract Dex {
     orders.push(Order(
       nextOrderId++, 
       msg.sender,
+      0,
       amount, 
       price,
       now
@@ -93,7 +106,39 @@ contract Dex {
     }
   }
 
-  function addMarketOrder() external {
+  function addMarketOrder(
+    bytes32 token, 
+    uint amount, 
+    uint price, 
+    Side side) 
+    external {
+    require(tokens[token].at != address(0), 'This token does not exist');
+    if(side == Side.SELL) {
+      require(balances[msg.sender][token] >= amount, 'Token balance is too low');  
+    }
+    Order[] storage orders = books[token][uint(side == Side.BUY ? Side.SELL : Side.BUY)];
+    uint i = 0;
+    uint filled = 0;
+    while(i < orders.length && filled < amount) {
+      uint matched = (amount > (orders[i].amount - orders[i].filled)) ? (orders[i].amount - orders[i].filled) : orders[i].amount; 
+      filled += matched;
+      orders[i].filled += matched; 
+      trades[token].push(Trade(
+        nextTradeId++,
+        orders[i].user, 
+        msg.sender,
+        orders[i].price,
+        matched,
+        now 
+      ));
+      i++;
+    }
+
+    //Prune orderbook - filled orders must be removed
+    i = 0;
+    while(i < orders.length && orders[i].filled == orders[i].amount) {
+      _shiftOrders(orders);
+    }
   }
 
   function getTokens() view public 
@@ -108,5 +153,13 @@ contract Dex {
       addresses[i] = tokens[tokenList[i]].at;
     }
     return (symbols, addresses);
+  }
+
+  function _shiftOrders(Order[] storage orders) internal {
+    for(uint i = 0; i < orders.length - 1; i++) {
+      orders[i] = orders[i + 1];
+    }
+    delete orders[orders.length - 1];
+    orders.length--;
   }
 }
