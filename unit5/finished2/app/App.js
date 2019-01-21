@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import Wallet from './components/Wallet';
-//import Orders from './components/orders';
 import NewOrder from './components/orders/NewOrder';
 import OrderList from './components/orders/OrderList';
 import TradeList from './components/Trade';
-//import Market from './components/Market';
 import { web3, contracts } from './ethereum';
 
 class App extends Component {
@@ -88,7 +86,7 @@ class App extends Component {
     return trades; 
   }
 
-  async selectAccount(account) {
+  selectAccount = async (account) => {
     const balances = await this.getBalances(
       account, 
       this.state.selection.token
@@ -99,7 +97,7 @@ class App extends Component {
     });
   }
 
-  async selectToken(token) {
+  selectToken = async (token) => {
     const balances = await this.getBalances(
       this.state.selection.account, 
       token
@@ -114,7 +112,7 @@ class App extends Component {
     });
   }
 
-  async deposit(amount) {
+  deposit = async (amount) => {
     const { selection, user } = this.state;
     const receipt = await contracts.dex.methods
       .deposit(amount, web3.utils.fromAscii(selection.token.symbol))
@@ -128,7 +126,7 @@ class App extends Component {
     });
   }
 
-  async withdraw(amount) {
+  withdraw = async (amount) => {
     const { selection, user } = this.state;
     const receipt = await contracts.dex.methods
       .withdraw(
@@ -146,7 +144,7 @@ class App extends Component {
     });
   }
 
-  async addMarketOrder(amount, price, side) {
+  addMarketOrder = async (amount, price, side) => {
     const { selection } = this.state;
     const receipt = await contracts.dex.methods
       .addMarketOrder(
@@ -162,7 +160,7 @@ class App extends Component {
     });
   }
 
-  async addLimitOrder(amount, price, side) {
+  addLimitOrder = async (amount, price, side) => {
     const { selection } = this.state;
     const receipt = await contracts.dex.methods
       .addLimitOrder(
@@ -188,21 +186,21 @@ class App extends Component {
           tokens={tokens}
           user={user}
           selection={selection}
-          selectAccount={this.selectAccount.bind(this)}
-          selectToken={this.selectToken.bind(this)}
+          selectAccount={this.selectAccount}
+          selectToken={this.selectToken}
         />
         <main className="container-fluid">
           <div className="row">
             <div className="col-sm-4 first-col">
               <NewOrder 
-                addMarketOrder={this.addMarketOrder.bind(this)}
-                addLimitOrder={this.addLimitOrder.bind(this)}
+                addMarketOrder={this.addMarketOrder}
+                addLimitOrder={this.addLimitOrder}
               />
               <Wallet 
                 selection={selection}
                 user={user}
-                deposit={this.deposit.bind(this)}
-                withdraw={this.withdraw.bind(this)}
+                deposit={this.deposit}
+                withdraw={this.withdraw}
               />
             </div>
             <div className="col-sm-8">

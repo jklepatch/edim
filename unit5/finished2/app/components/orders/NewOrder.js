@@ -22,23 +22,23 @@ class Orders extends Component {
     };
   }
 
-  onTypeChange(type) {
+  onTypeChange = (type) => {
     this.setState({type});
   }
 
-  onSideChange(side) {
+  onSideChange = (side) => {
     this.setState({side});
   }
 
-  onAmountChange(amount) {
+  onAmountChange = (amount) => {
     this.setState({amount});
   }
 
-  onPriceChange(price) {
+  onPriceChange = (price) => {
     this.setState({price});
   }
   
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
     const { type, side, amount, price } = this.state;
     if(type === TYPE.MARKET) {
@@ -61,12 +61,12 @@ class Orders extends Component {
                 <button 
                   type="button" 
                   className={`btn btn-secondary ${type === TYPE.LIMIT ? 'active' : ''}`}
-                  onClick={this.onTypeChange.bind(this, TYPE.LIMIT)}
+                  onClick={() => this.onTypeChange(TYPE.LIMIT)}
                 >Limit</button>
                 <button 
                   type="button" 
                   className={`btn btn-secondary ${type === TYPE.MARKET ? 'active' : ''}`}
-                  onClick={this.onTypeChange.bind(this, TYPE.MARKET)}
+                  onClick={() => this.onTypeChange(TYPE.MARKET)}
                 >Market</button>
               </div>
             </div>
@@ -78,12 +78,12 @@ class Orders extends Component {
                 <button 
                   type="button" 
                   className={`btn btn-secondary ${side === SIDE.BUY ? 'active' : ''}`}
-                  onClick={this.onSideChange.bind(this, SIDE.BUY)}
+                  onClick={() => this.onSideChange(SIDE.BUY)}
                 >Buy</button>
                 <button 
                   type="button" 
                   className={`btn btn-secondary ${side === SIDE.SELL ? 'active' : ''}`}
-                  onClick={this.onSideChange.bind(this, SIDE.SELL)}
+                  onClick={() => this.onSideChange(SIDE.SELL)}
                 >Sell</button>
               </div>
             </div>

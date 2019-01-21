@@ -7,14 +7,13 @@ class Dropdown extends Component {
     this.state = {
       dropdownVisible: false
     };
-    this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
-  toggleDropdown() {
+  toggleDropdown = () => {
     this.setState({dropdownVisible: !this.state.dropdownVisible});
   }
 
-  selectItem(item) {
+  selectItem = (item) => {
     this.setState({dropdownVisible: !this.state.dropdownVisible});
     this.props.onSelect(item);
   }
@@ -38,7 +37,7 @@ class Dropdown extends Component {
               className={`dropdown-item ${item.value == activeItem.value ? 'active' : null}`} 
               href="#"
               key={i}
-              onClick={this.selectItem.bind(this, item.value)}
+              onClick={() => this.selectItem(item.value)}
             >
               {item.label}
             </a>

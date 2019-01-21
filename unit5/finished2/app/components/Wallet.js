@@ -15,15 +15,15 @@ class Wallet extends Component {
     }
   }
 
-  onDirectionChange(direction) {
+  onDirectionChange = (direction) => {
     this.setState({direction});
   }
 
-  onAmountChange(amount) {
+  onAmountChange = (amount) => {
     this.setState({amount});
   }
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
     const { amount, direction } = this.state;
     if(direction === DIRECTION.DEPOSIT) {
@@ -72,12 +72,12 @@ class Wallet extends Component {
                 <button 
                   type="button" 
                   className={`btn btn-secondary ${direction === DIRECTION.DEPOSIT ? 'active' : ''}`}
-                  onClick={this.onDirectionChange.bind(this, DIRECTION.DEPOSIT)}
+                  onClick={() => this.onDirectionChange(DIRECTION.DEPOSIT)}
                 >Deposit</button>
                 <button 
                   type="button" 
                   className={`btn btn-secondary ${direction === DIRECTION.WIDTHDRAW ? 'active' : ''}`}
-                  onClick={this.onDirectionChange.bind(this, DIRECTION.WIDTHDRAW)}
+                  onClick={() => this.onDirectionChange(DIRECTION.WIDTHDRAW)}
                 >Withdraw</button>
               </div>
             </div>
