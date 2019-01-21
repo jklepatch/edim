@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import Wallet from './components/Wallet';
-import NewOrder from './components/orders/NewOrder';
-import OrderList from './components/orders/OrderList';
-import TradeList from './components/Trade';
+import NewOrder from './components/NewOrder';
+import OrderList from './components/OrderList';
+import TradeList from './components/TradeList';
 import { web3, contracts } from './ethereum';
 
 class App extends Component {
