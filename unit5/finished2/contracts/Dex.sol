@@ -5,11 +5,13 @@ import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 
 contract Dex {
   struct Token {
+    uint id;
     bytes32 symbol;
     address at;
   }
   mapping(bytes32 => Token) tokens; 
   bytes32[] tokenList;
+  uint nextTokenId;
   mapping(address => mapping(bytes32 => uint)) balances;
 
   struct Order {
@@ -40,17 +42,17 @@ contract Dex {
 
   constructor(bytes32[] memory symbols, address[] memory ats) public {
     for(uint i = 0; i < symbols.length; i++) {
-      tokens[symbols[i]] = Token(symbols[i], ats[i]);
+      tokens[symbols[i]] = Token(nextTokenId++, symbols[i], ats[i]);
       tokenList.push(symbols[i]);
     }
   }
 
-  function deposit(uint amount, bytes32 symbol) public {
+  function deposit(uint amount, bytes32 symbol) external {
     IERC20(tokens[symbol].at).transferFrom(msg.sender, address(this), amount);
     balances[msg.sender][symbol] += amount;
   }
 
-  function withdraw(uint amount, bytes32 symbol, address to) public {
+  function withdraw(uint amount, bytes32 symbol, address to) external {
     require(balances[msg.sender][symbol] >= amount);
     balances[msg.sender][symbol] -= amount;
     IERC20(tokens[symbol].at).transfer(to, amount);
@@ -112,6 +114,11 @@ contract Dex {
     Order[] storage orders = books[token][uint(side == Side.BUY ? Side.SELL : Side.BUY)];
     uint i = 0;
     uint remaining = amount;
+    /*
+     * Create trades while:
+     * - orderbook has unfilled orders 
+     * - and market order amount is not filled 100%
+     */
     while(i < orders.length && remaining > 0) {
       uint matched = (remaining > (orders[i].amount - orders[i].filled)) ? (orders[i].amount - orders[i].filled) : remaining; 
       remaining -= matched;
@@ -151,17 +158,16 @@ contract Dex {
   function getTokens() 
     view 
     external 
-    returns(
-      bytes32[] memory, 
-      address[] memory
-    ) {
-    bytes32[] memory symbols = new bytes32[](tokenList.length);
-    address[] memory addresses = new address[](tokenList.length);
+    returns(Token[] memory) {
+    Token[] memory _tokens = new Token[](tokenList.length);
     for(uint i = 0; i < tokenList.length; i++) {
-      symbols[i] = tokens[tokenList[i]].symbol;
-      addresses[i] = tokens[tokenList[i]].at;
+      _tokens[i] = Token(
+        tokens[tokenList[i]].id,
+        tokens[tokenList[i]].symbol,
+        tokens[tokenList[i]].at
+      );
     }
-    return (symbols, addresses);
+    return _tokens;
   }
 
   function _shiftOrders(Order[] storage orders) internal {

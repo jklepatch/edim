@@ -34,14 +34,9 @@ class App extends Component {
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
     const rawTokens = await contracts.dex.methods.getTokens().call();
-    const tokens = [];
-    for(let i = 0; i < rawTokens[0].length; i++) {
-      tokens.push({
-        id: i,
-        symbol: web3.utils.hexToUtf8(rawTokens[0][i]),
-        address: rawTokens[1][i]
-      });
-    }
+    const tokens = rawTokens.map((token, i) => {
+      return {...token, symbol: web3.utils.hexToUtf8(token.symbol)};
+    });
     const activeAccount = accounts[4];
     const activeToken = tokens[0];
     const balances = await this.getBalances(activeAccount, activeToken);
