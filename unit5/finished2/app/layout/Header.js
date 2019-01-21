@@ -32,7 +32,7 @@ class Header extends Component {
     return (
       <Dropdown 
         className="ml-3"
-        items={tokens.map((token, i) => ({
+        items={tokens.map((token) => ({
           label: token.symbol,
           value: token
         }))} 

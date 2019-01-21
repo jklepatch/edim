@@ -52,6 +52,6 @@ class OrderList extends Component {
 
 OrderList.propTypes = {
   orders: PropTypes.object
-}
+};
 
 export default OrderList;

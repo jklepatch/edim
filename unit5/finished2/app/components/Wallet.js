@@ -12,7 +12,7 @@ class Wallet extends Component {
     this.state = {
       direction: DIRECTION.DEPOSIT,
       amount: 0
-    }
+    };
   }
 
   onDirectionChange = (direction) => {
@@ -41,28 +41,28 @@ class Wallet extends Component {
       <div id="wallet" className="card">
         <h2 className="card-title">Wallet</h2>
         <h3>Token balance for {selection.token.symbol}</h3>
-          <div className="form-group row">
-            <label htmlFor="wallet" className="col-sm-4 col-form-label">Wallet</label>
-            <div className="col-sm-8">
-              <input 
-                className="form-control" 
-                id="wallet" 
-                disabled 
-                value={user.balances.tokenWallet}
-              />
-            </div>
+        <div className="form-group row">
+          <label htmlFor="wallet" className="col-sm-4 col-form-label">Wallet</label>
+          <div className="col-sm-8">
+            <input 
+              className="form-control" 
+              id="wallet" 
+              disabled 
+              value={user.balances.tokenWallet}
+            />
           </div>
-          <div className="form-group row">
-            <label htmlFor="contract" className="col-sm-4 col-form-label">Dex</label>
-            <div className="col-sm-8">
-              <input 
-                className="form-control" 
-                id="wallet" 
-                disabled 
-                value={user.balances.tokenDex}
-              />
-            </div>
+        </div>
+        <div className="form-group row">
+          <label htmlFor="contract" className="col-sm-4 col-form-label">Dex</label>
+          <div className="col-sm-8">
+            <input 
+              className="form-control" 
+              id="wallet" 
+              disabled 
+              value={user.balances.tokenDex}
+            />
           </div>
+        </div>
         <h3>Transfer {selection.token.symbol}</h3>
         <form id="transfer" onSubmit={(e) => this.onSubmit(e)}>
           <div className="form-group row">
@@ -106,5 +106,12 @@ class Wallet extends Component {
     );
   }
 }
+
+Wallet.propTypes = {
+  selection: PropTypes.object,
+  user: PropTypes.object,
+  deposit: PropTypes.func.isRequired,
+  withdraw: PropTypes.func.isRequired
+};
 
 export default Wallet;

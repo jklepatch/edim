@@ -13,7 +13,7 @@ const SIDE = {
 
 class Orders extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       type: TYPE.LIMIT,
       side: SIDE.BUY,

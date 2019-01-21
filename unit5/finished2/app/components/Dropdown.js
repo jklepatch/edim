@@ -19,7 +19,7 @@ class Dropdown extends Component {
   }
 
   render() {
-    const { className, items, activeItem, onChange } = this.props;
+    const { className, items, activeItem } = this.props;
     const { dropdownVisible } = this.state;
 
     return (
@@ -52,7 +52,8 @@ Dropdown.propTypes = {
   id: PropTypes.string,
   items: PropTypes.array,
   activeItem: PropTypes.object,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default Dropdown;

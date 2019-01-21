@@ -46,6 +46,6 @@ class TradeList extends Component {
 
 TradeList.propTypes = {
   trades: PropTypes.array
-}
+};
 
 export default TradeList;
