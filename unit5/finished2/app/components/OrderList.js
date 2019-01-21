@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
 
 class OrderList extends Component {
   renderList(orders, side, className) {
@@ -21,7 +22,9 @@ class OrderList extends Component {
               <tr key={order.id}>
                 <td>{order.amount}</td>
                 <td>{order.price}</td>
-                <td>{order.date}</td>
+                <td>
+                  <Moment fromNow>{parseInt(order.date) * 1000}</Moment>
+                </td>
               </tr>
             ))}
           </tbody>

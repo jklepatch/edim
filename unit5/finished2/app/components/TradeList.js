@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
 
 class TradeList extends Component {
   renderList(trades, className) {
@@ -18,7 +19,9 @@ class TradeList extends Component {
               <tr key={trade.id}>
                 <td>{trade.amount}</td>
                 <td>{trade.price}</td>
-                <td>{trade.date}</td>
+                <td>
+                  <Moment fromNow>{parseInt(trade.date) * 1000}</Moment>
+                </td>
               </tr>
             ))}
           </tbody>
