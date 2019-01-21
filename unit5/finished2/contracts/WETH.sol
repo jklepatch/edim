@@ -3,6 +3,7 @@ pragma solidity ^0.5.0;
 import 'openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 import 'openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol';
 
+
 /**
  * @title SimpleToken
  * @dev Very simple ERC20 Token example, where all tokens are pre-assigned to the creator.
