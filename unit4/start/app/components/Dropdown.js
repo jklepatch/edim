@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Dropdown extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dropdownVisible: false
-    };
-  }
+  state = {
+    dropdownVisible: false
+  };
 
   toggleDropdown = () => {
     this.setState({dropdownVisible: !this.state.dropdownVisible});

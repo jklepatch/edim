@@ -9,7 +9,7 @@ class Header extends Component {
       <header id="header" className="card">
         <div className="row">
           <div className="col-sm-3 flex">
-            <p>Todo...</p>
+            <p>@Todo: Account + Token dropdown</p>
           </div>
           <div className="col-sm-9">
             <h1 className="header-title">
