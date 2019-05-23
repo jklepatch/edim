@@ -1,7 +1,31 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react'; 
+import Dropdown from './Dropdown';
 
 class Header extends Component {
+  formatAccount(account, i) {
+    return `(${i}) ${account && account.slice(0, 8)}...`;
+  }
+
+  renderAccounts() {
+    const { user, selection, selectAccount } = this.props;
+    return (
+      <Dropdown 
+        items={user.accounts.map((account, i) => ({
+          label: this.formatAccount(account, i),
+          value: account
+        }))} 
+        activeItem={{
+          label: this.formatAccount(
+            selection.account, 
+            user.accounts.indexOf(selection.account)), 
+          value: selection.account
+        }}
+        onSelect={selectAccount}
+      />
+    );
+  }
+
   render() {
     const { contracts } = this.props;
 
@@ -9,7 +33,7 @@ class Header extends Component {
       <header id="header" className="card">
         <div className="row">
           <div className="col-sm-3 flex">
-            <p>@Todo: Account + Token dropdown</p>
+            {this.renderAccounts()}
           </div>
           <div className="col-sm-9">
             <h1 className="header-title">
@@ -24,6 +48,9 @@ class Header extends Component {
 
 Header.propTypes = {
   contracts: PropTypes.object,
+  user: PropTypes.object,
+  selection: PropTypes.object,
+  selectAccount: PropTypes.func.isRequired
 };
 
 export default Header;

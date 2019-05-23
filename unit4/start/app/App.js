@@ -4,11 +4,44 @@ import Footer from './components/Footer';
 import { web3, contracts } from './ethereum';
 
 class App extends Component {
+  state = {
+    user: {
+      accounts: [], 
+    },
+    selection: {
+      account: '',
+    }
+  };
+
+  async componentDidMount() {
+    const accounts = await web3.eth.getAccounts();
+    const activeAccount = accounts[0];
+    this.setState({
+      user: {
+        accounts
+      },
+      selection: {
+        account: activeAccount
+      }
+    });
+  }
+  
+  selectAccount = async (account) => {
+    this.setState({
+      selection: { ...this.state.selection, account},
+    });
+  }
+
   render() {
+    const { user, selection } = this.state;
+
     return (
       <div id="app">
         <Header 
           contracts={contracts}
+          user={user}
+          selection={selection}
+          selectAccount={this.selectAccount}
         />
         <main className="container-fluid">
           <div className="row">
